@@ -3,12 +3,12 @@
 ### Introduction
 This repository shows a simple and quick method of classifying EMG data coming from Myo Armband using neural networks. The classified finger movement is then sent to a 3-d printed robotic hand that I designed via bluetooth and the robotic hand imitates the finger movement.
 
-![alt test](images/flowchart)
+![flowchart](https://user-images.githubusercontent.com/41015749/66622987-681c4c80-ebaf-11e9-8ee5-1998cdfc2ac2.png)
 
 ### Explanation 
 EMG signals are quite random in nature and are difficult to distinguish if we want to use them to differentiate between finger movements. Different sensors have been used by researchers to extract the EMG signals, from painful needle insertion techniques to attaching multiple surface EMG sensors on hand. In this project, a surface EMG based armband is used called "Myo Gesture Control Armband". It was designed by a Canadian company "Thalmic Labs". This armband has 8 sensors that measure EMG signals at 200 Hz frequency.
 
-![alt test](images/armband)
+![armband](https://user-images.githubusercontent.com/41015749/66623030-8bdf9280-ebaf-11e9-9288-cdeb6f932af4.png)
 
  For this project, I used Niklas Rosenstein's Myo-Python library that he kindly shared on Github. This library is based on Python and allows EMG armband to be interfaced using Python programming language. I added some features using his library to make sure application doesnt crash.
  
@@ -19,11 +19,11 @@ For neural network, to keep computations less I am using a single hidden layer n
 
 Following are the training results of neural network 
 
-![alt test](images/results)
+![results](https://user-images.githubusercontent.com/41015749/66623043-9b5edb80-ebaf-11e9-909f-e4206ddf390a.png)
 
 Following results were observed after training on 5 movements and for 12 movements. Both networks were different:
 
-![alt test](images/confusion matrix)
+![confusion matrix](https://user-images.githubusercontent.com/41015749/66623050-a580da00-ebaf-11e9-815e-ea612c73b644.jpg)
 
 #### Hardware Used:
 Following hardware was used for the project:
@@ -36,14 +36,15 @@ Following hardware was used for the project:
 
 Here is a picture of the robotic hand alongwith other hardware
 
-![alt test](images/20190910_112354)
+![20190910_112354](https://user-images.githubusercontent.com/41015749/66623057-afa2d880-ebaf-11e9-8382-a1852b5388de.jpg)
 
 Here is how the design of fingers looks like
-![alt test](images/finger design)
+
+![finger design](https://user-images.githubusercontent.com/41015749/66623074-bf222180-ebaf-11e9-9fce-445f176eea32.jpg)
 
 Here are different views of palm of robotic hand
 
-![alt test](images/robotic hand)
+![robotic hand](https://user-images.githubusercontent.com/41015749/66623082-cba67a00-ebaf-11e9-9a7d-74349d522b87.jpg)
 
 Look at the repository to find the code and design files for robotic hand. 
 
