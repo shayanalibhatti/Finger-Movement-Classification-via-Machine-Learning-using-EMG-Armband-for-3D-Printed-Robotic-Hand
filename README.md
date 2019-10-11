@@ -46,7 +46,7 @@ Here are different views of palm of robotic hand
 
 ![robotic hand](https://user-images.githubusercontent.com/41015749/66623082-cba67a00-ebaf-11e9-9a7d-74349d522b87.jpg)
 
-Look at the repository to find the code and design files for robotic hand. 
+Look at the repository to find the code for robotic hand. 
 
 ### Conclusion
 This project shows a simple method for finger movement classification. It was done to provide a simple EMG classification solution that can be trained without arduous training which can take minutes for people keeping their hand in a static position to train a movement. Thus, a caveat of this method is that the training and verification of each finger movement must be done by keeping hand static on an armchair. It is left to users to increase time of movement for robust results, they can also increase the number of times each movement is recorded to increase the range of movements.
