@@ -354,7 +354,6 @@ def main():
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             input("Open THUMB ")    
-            start_time = time.time()
             hub.run(listener.on_event,20000)
             thumb_open_training_set = np.array((data_array[0]))
             print(thumb_open_training_set.shape)
@@ -372,14 +371,11 @@ def main():
     while True:
         try:
             input("Open index finger")
-            start_time = time.time()
             hub = myo.Hub()
             listener = Listener(number_of_samples)
-
             hub.run(listener.on_event,20000)
             # Here we send the received number of samples making them a list of 1000 rows 8 columns 
-            index_open_training_set = np.array((data_array[0]))
-            
+            index_open_training_set = np.array((data_array[0]))            
             data_array.clear()
             break
         except:
@@ -392,7 +388,6 @@ def main():
     while True:
         try:
             input("Open MIDDLE finger")
-            start_time = time.time()
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
@@ -411,7 +406,6 @@ def main():
     while True:
         try:
             input("Open Ring finger")
-            start_time = time.time()
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
@@ -428,7 +422,6 @@ def main():
     while True:
         try:
             input("Open Pinky finger")
-            start_time = time.time()
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
@@ -446,7 +439,6 @@ def main():
         try:
             
             input("Open Two fingers")
-            start_time = time.time()
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
@@ -463,7 +455,6 @@ def main():
     while True:
         try:
             input("Open Three fingers")
-            start_time = time.time()
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
@@ -480,7 +471,6 @@ def main():
     while True:
         try:            
             input("Open Four fingers")
-            start_time = time.time()
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
@@ -497,7 +487,6 @@ def main():
     while True:
         try:
             input("Open Five fingers")
-            start_time = time.time()
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
@@ -514,7 +503,6 @@ def main():
     while True:
         try:
             input("Make all fingers closed")
-            start_time = time.time()
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
@@ -531,7 +519,6 @@ def main():
     while True:
         try:
             input("Make Grasp movement")
-            start_time = time.time()
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
@@ -548,7 +535,6 @@ def main():
     while True:
         try:
             input("Make Pick movement")
-            start_time = time.time()
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
