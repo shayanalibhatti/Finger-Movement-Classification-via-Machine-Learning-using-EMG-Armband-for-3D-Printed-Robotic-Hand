@@ -16,7 +16,6 @@ from keras.models import load_model
 from sklearn import preprocessing
 
 import myo
-
 import time
 import sys
 import psutil
@@ -34,7 +33,7 @@ global data_array
 number_of_samples = 1000
 data_array=[]
 
-
+# 8 Sensors in armband
 Sensor1 = np.zeros((1,number_of_samples))
 Sensor2 = np.zeros((1,number_of_samples))
 Sensor3 = np.zeros((1,number_of_samples))
@@ -44,7 +43,7 @@ Sensor6 = np.zeros((1,number_of_samples))
 Sensor7 = np.zeros((1,number_of_samples))
 Sensor8 = np.zeros((1,number_of_samples))
 
-unrecognized_training_set = np.zeros((8,number_of_samples))
+# 12 finger movements
 index_open_training_set = np.zeros((8,number_of_samples))
 middle_open_training_set = np.zeros((8,number_of_samples))
 thumb_open_training_set = np.zeros((8,number_of_samples))
@@ -59,7 +58,6 @@ grasp_training_set = np.zeros((8,number_of_samples))
 pick_training_set = np.zeros((8,number_of_samples))
 
 verification_set = np.zeros((8,number_of_samples))
-
 training_set = np.zeros((8,number_of_samples))
 
 
@@ -78,15 +76,7 @@ pick_label = 11
 
 name = input("Enter name of Subject")
 
-def find_one_hot(labels,classes):
-    # = tf.constant(C)
-    output = tf.one_hot(labels,classes,axis=0)
-    sess = tf.Session()
-    out = sess.run(output)
-    sess.close
-    return out
-
-
+# Check if Myo Connect.exe process is running
 def check_if_process_running():
 
     try:
@@ -99,7 +89,7 @@ def check_if_process_running():
     except (psutil.NoSuchProcess,psutil.AccessDenied, psutil.ZombieProcess):
         print (PROCNAME, " not running")
 
-
+# Restart myo connect.exe process if its not running
 def restart_process():
     PROCNAME = "Myo Connect.exe"
 
@@ -120,9 +110,8 @@ def restart_process():
     print("Process started")
     return True
 
-
+# This class from Myo-python SDK listens to EMG signals from armband
 class Listener(myo.DeviceListener):
-    global data_array
     
     def __init__(self, n):
         self.n = n
@@ -136,7 +125,7 @@ class Listener(myo.DeviceListener):
         
     def get_emg_data(self):
         with self.lock:
-            print("H")
+            print("H")   # Ignore this
 
     def on_emg(self, event):
         with self.lock:
@@ -180,10 +169,7 @@ def Train(conc_array):
     all_shuffled_data,all_shuffled_labels = conc_array[permutation_function],labels[permutation_function]
     print(all_shuffled_data.shape)
     print(all_shuffled_labels.shape)
-#    np.savetxt('C:/Users/A8/Desktop/avg_data.txt', all_shuffled_data, fmt='%i')
-#    np.savetxt('C:/Users/A8/Desktop/avg_labels.txt', all_shuffled_labels, fmt='%i')
     
-
     number_of_training_samples = np.int(np.floor(0.8*total_samples))        
     train_data = np.zeros((number_of_training_samples,8))
     train_labels = np.zeros((number_of_training_samples,8))
@@ -196,15 +182,11 @@ def Train(conc_array):
     validation_labels = all_shuffled_labels[number_of_training_samples:total_samples,]
     print("Length of validation data is ", validation_data.shape , " validation labels is " , validation_labels.shape)
     print(train_data,train_labels)        
- #       exit()
         
     model = keras.Sequential([
     # Input dimensions means input columns. Here we have 8 columns, one for each sensor
     keras.layers.Dense(8, activation=tf.nn.relu,input_dim=8,kernel_regularizer=regularizers.l2(0.1)),
     keras.layers.BatchNormalization(),
-#    keras.layers.Dense(8, activation=tf.nn.relu,kernel_regularizer=regularizers.l2(0.1)),
-#    keras.layers.BatchNormalization(),
-#    keras.layers.Dense(30, activation=tf.nn.relu,kernel_regularizer=regularizers.l2(0.1)),
     keras.layers.Dense(12, activation=tf.nn.softmax)])
 
     adam_optimizer = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
@@ -214,6 +196,8 @@ def Train(conc_array):
         
     history = model.fit(train_data, train_labels, epochs=300,validation_data=(validation_data,validation_labels),batch_size=16)
     model.save('C:/Users/shaya/Desktop/'+name+'_realistic_model.h5')
+    
+    # Here we display the training and test loss for model
     plt.plot(history.history['acc'])
     plt.plot(history.history['val_acc'])
     plt.title('model accuracy')
@@ -236,7 +220,6 @@ def Train(conc_array):
     
     
     while True:
-#        try:
         while True:
             try:
                 input("Hold a finger movement and press enter to get its classification")
@@ -245,7 +228,7 @@ def Train(conc_array):
                 listener = Listener(number_of_samples)
                 hub.run(listener.on_event,20000)
 
-            # Here we send the received number of samples making them a list of 1000 rows 8 columns
+                # Here we send the received number of samples making them a list of 1000 rows 8 columns
                 verification_set = np.array((data_array[0]))
                 data_array.clear()
                 break
@@ -265,15 +248,6 @@ def Train(conc_array):
 
         verification_data = verification_averages
         print("Verification matrix shape is " , verification_data.shape)
-        # Now we store the training set in index_open_training_set
-#        verification_data = preprocessing.scale(verification_averages,axis=0)
-        # Plotting the histogram of the data
-#        plt.hist([verification_data[:,0],verification_data[:,1],verification_data[:,2],verification_data[:,3],verification_data[:,4],verification_data[:,5],verification_data[:,6],verification_data[:,7]],bins=[0,20,40,60,80,100])
-#        plt.title('Histogram of verification data')
-#        plt.legend(legend)
-#        plt.ylabel('Frequency')
-#        plt.xlabel('EMG Levels')
-#        plt.show()
         
         predictions = model.predict(verification_data,batch_size=16)
         predicted_value = np.argmax(predictions[0])
@@ -337,15 +311,9 @@ def Train(conc_array):
             except TypeError as e:
                 print (str(e))
                 ser.port.close()
-
-
-        
-#        except Exception as e:
-#            print(getattr(e, 'message', repr(e)))
             
 
 def main():
-    global data_array
     unrecognized_training_set = np.zeros((8,number_of_samples))
     index_open_training_set = np.zeros((8,number_of_samples))
     middle_open_training_set = np.zeros((8,number_of_samples))
@@ -398,10 +366,6 @@ def main():
             # Wait for 3 seconds until Myo Connect.exe starts
             time.sleep(3)
         
-   
-#    print((time.time()-start_time)*1000)
-#    print(hub.running)
-
     # Here we send the received number of samples making them a list of 1000 rows 8 columns just how we need to feed to tensorflow
     
     ################## HERE WE GET TRAINING DATA FOR INDEX FINGER OPEN ########
@@ -441,9 +405,6 @@ def main():
             # Wait for 3 seconds until Myo Connect.exe starts
             time.sleep(3)
 
-    #    print((time.time()-start_time)*1000)
-#    print(hub.running)
-
     # Here we send the received number of samples making them a list of 1000 rows 8 columns
         
     ################## HERE WE GET TRAINING DATA FOR RING FINGER OPEN ##########
@@ -454,8 +415,6 @@ def main():
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
-        #    print((time.time()-start_time)*1000)
-        #    print(hub.running)
             ring_open_training_set = np.array((data_array[0]))
             data_array.clear()
             break
@@ -473,8 +432,6 @@ def main():
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
-        #    print((time.time()-start_time)*1000)
-        #    print(hub.running)
             pinky_open_training_set = np.array((data_array[0]))
             data_array.clear()
             break
@@ -493,8 +450,6 @@ def main():
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
-        #    print((time.time()-start_time)*1000)
-        #    print(hub.running)
             two_open_training_set = np.array((data_array[0]))
             data_array.clear()
             break
@@ -512,8 +467,6 @@ def main():
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
-        #    print((time.time()-start_time)*1000)
-        #    print(hub.running)
             three_open_training_set = np.array((data_array[0]))
             data_array.clear()
             break
@@ -531,8 +484,6 @@ def main():
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
-         #   print((time.time()-start_time)*1000)
-         #   print(hub.running)
             four_open_training_set = np.array((data_array[0]))
             data_array.clear()
             break
@@ -550,8 +501,6 @@ def main():
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
-        #    print((time.time()-start_time)*1000)
-        #    print(hub.running)
             five_open_training_set = np.array((data_array[0]))
             data_array.clear()
             break
@@ -569,8 +518,6 @@ def main():
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
-        #    print((time.time()-start_time)*1000)
-        #    print(hub.running)
             all_fingers_closed_training_set = np.array((data_array[0]))
             data_array.clear()
             break
@@ -588,8 +535,6 @@ def main():
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
-        #    print((time.time()-start_time)*1000)
-        #    print(hub.running)
             grasp_training_set = np.array((data_array[0]))
             data_array.clear()
             break
@@ -607,8 +552,6 @@ def main():
             hub = myo.Hub()
             listener = Listener(number_of_samples)
             hub.run(listener.on_event,20000)
-        #    print((time.time()-start_time)*1000)
-        #    print(hub.running)
             pick_training_set = np.array((data_array[0]))
             data_array.clear()
             break
@@ -669,7 +612,6 @@ def main():
     conc_array = np.concatenate([thumb_open_averages,index_open_averages,middle_open_averages,ring_open_averages,pinky_open_averages,two_open_averages,three_open_averages,four_open_averages,five_open_averages,all_fingers_closed_averages,grasp_averages,pick_averages],axis=0)
     print(conc_array.shape)
     np.savetxt('C:/Users/shaya/Desktop/'+name+'.txt', conc_array, fmt='%i')
-#    exit()
     # In this method the EMG data gets trained and verified
     Train(conc_array)
 
