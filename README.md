@@ -1,4 +1,4 @@
-# Finger Movement Classification via Machine Learning using EMG Armband for 3D Printed Robotic Hand
+# Finger Movement Classification via Neural Network using Myo EMG Armband for 3D Printed Robotic Hand
 
 ### Introduction
 This repository shows a simple and quick method of classifying EMG data coming from Myo Armband using neural networks. The classified finger movement is then sent to a 3-d printed robotic hand that I designed via bluetooth and the robotic hand imitates the finger movement.
