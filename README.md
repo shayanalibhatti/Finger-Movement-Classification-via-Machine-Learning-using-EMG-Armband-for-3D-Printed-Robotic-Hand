@@ -10,7 +10,19 @@ EMG signals are quite random in nature and are difficult to distinguish if we wa
 
 ![armband](https://user-images.githubusercontent.com/41015749/66623030-8bdf9280-ebaf-11e9-9288-cdeb6f932af4.png)
 
- For this project, I used Niklas Rosenstein's Myo-Python library that he kindly shared on Github. This library is based on Python and allows EMG armband to be interfaced using Python programming language. I added some features using his library to make sure application doesnt crash.
+For this project, I used Niklas Rosenstein's Myo-Python library that he kindly shared on Github. This library is based on Python and allows EMG armband to be interfaced using Python programming language. I added some features using his library to make sure application doesnt crash which it would quite often otherwise.
+ 
+The 5 finger movements chosen for thise project were:
+1) Thumb open   2) Index finger open  3) Middle finger open  4) Ring finger open  5) Pinky finger open
+ 
+ ![Picture1](https://user-images.githubusercontent.com/41015749/66705672-5a6de080-ecef-11e9-8732-b253c6e4dec9.png)
+ 
+For 12 finger movement training, we had:
+a) Thumb open	b) Index open	c) Middle open	d) Ring open	
+e) Pinky open	f) Two fingers open	g) Three fingers open	h) Four fingers open
+i) Five fingers open	j) All fingers closed	k) Grab		l) Pick
+ 
+ ![Picture2](https://user-images.githubusercontent.com/41015749/66705674-5c37a400-ecef-11e9-825e-07724736ec94.png)
  
 #### Data Processing
 In this project, target was to develop a quick and dirty solution to classify EMG signals that is computationally inexpensive. Here, I record each finger movement's data for 5 seconds. There are two files of codes in repository, one for 5 finger movements and other for 12 finger movements. So, for feature processing I used absolute values of EMG and took windowed average of it with window size of 50. Then i fed the data to train on a neural network.
@@ -46,7 +58,7 @@ Here are different views of palm of robotic hand
 
 ![robotic hand](https://user-images.githubusercontent.com/41015749/66623082-cba67a00-ebaf-11e9-9a7d-74349d522b87.jpg)
 
-Look at the repository to find the code for robotic hand. 
+Look at the repository to find the code for robotic hand. There are 2 code files for Arduino that run the code for bluetooth data reception and for controlling servo motors for 5 and 12 finger movements. There are 2 code files for Python, one for 5 finger movements, one for 12 finger movements, that take care of receiving bluetooth data from Myo armband and do neural network classification and identify finger movement.
 
 ### Conclusion
 This project shows a simple method for finger movement classification. It was done to provide a simple EMG classification solution that can be trained without arduous training which can take minutes for people keeping their hand in a static position to train a movement. Thus, a caveat of this method is that the training and verification of each finger movement must be done by keeping hand static on an armchair. It is left to users to increase time of movement for robust results, they can also increase the number of times each movement is recorded to increase the range of movements.
