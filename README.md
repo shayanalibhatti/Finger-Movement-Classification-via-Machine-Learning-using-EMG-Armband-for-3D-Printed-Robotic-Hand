@@ -63,6 +63,10 @@ Look at the repository to find the code for robotic hand. There are 2 code files
 ### Conclusion
 This project shows a simple method for finger movement classification. It was done to provide a simple EMG classification solution that can be trained without arduous training which can take minutes for people keeping their hand in a static position to train a movement. Thus, a caveat of this method is that the training and verification of each finger movement must be done by keeping hand static on an armchair. It is left to users to increase time of movement for robust results, they can also increase the number of times each movement is recorded to increase the range of movements.
 
+Also, the design of robotic hand that I designed, is quite novel as other designs are huge and use normal servo motors, whereas I used micro servo motor and this hand's dimensions are based on my hand. Thus this design is realistic and very lightweight.
+
+If someone wants to imitate the project, PLEASE CONSIDER USING LSTMs instead of vanilla neural network that i used here. LSTMs have great ability to capture sequences. With Keras, implementing LSTM is very easy. As EMG capture is time-series based data, LSTMs will pave way for better classification and higher number of movements. 
+
 I hope this project and its code will help people using the EMG armband to get a quick start using Myo-Python library and help them achieve their targets with the armband.
 
 ### Special Thanks 
