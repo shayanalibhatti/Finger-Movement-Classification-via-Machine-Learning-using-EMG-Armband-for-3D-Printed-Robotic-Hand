@@ -60,6 +60,9 @@ Here are different views of palm of robotic hand
 
 Look at the repository to find the code for robotic hand. There are 2 code files for Arduino that run the code for bluetooth data reception and for controlling servo motors for 5 and 12 finger movements. There are 2 code files for Python, one for 5 finger movements, one for 12 finger movements, that take care of receiving bluetooth data from Myo armband and do neural network classification and identify finger movement.
 
+### Working Video
+Video of algorithm and robotic hand in action can be viewed on YouTube at https://www.youtube.com/watch?v=4YontNdTQXA
+
 ### Conclusion
 This project shows a simple method for finger movement classification. It was done to provide a simple EMG classification solution that can be trained without arduous training which can take minutes for people keeping their hand in a static position to train a movement. Thus, a caveat of this method is that the training and verification of each finger movement must be done by keeping hand static on an armchair. It is left to users to increase time of movement for robust results, they can also increase the number of times each movement is recorded to increase the range of movements.
 
