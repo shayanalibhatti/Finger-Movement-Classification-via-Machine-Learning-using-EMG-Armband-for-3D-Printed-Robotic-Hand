@@ -63,6 +63,10 @@ Look at the repository to find the code for robotic hand. There are 2 code files
 ### Working Video
 Video of algorithm and robotic hand in action can be viewed on YouTube at https://www.youtube.com/watch?v=4YontNdTQXA
 
+### Link to Thesis Document
+Please cite it if it helps you in your research.
+https://conservancy.umn.edu/bitstream/handle/11299/209182/Bhatti_umn_0130M_20811.pdf?sequence=1
+
 ### Conclusion
 This project shows a simple method for finger movement classification. It was done to provide a simple EMG classification solution that can be trained without arduous training which can take minutes for people keeping their hand in a static position to train a movement. Thus, a caveat of this method is that the training and verification of each finger movement must be done by keeping hand static on an armchair. It is left to users to increase time of movement for robust results, they can also increase the number of times each movement is recorded to increase the range of movements.
 
